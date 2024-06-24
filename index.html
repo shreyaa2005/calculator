@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CALCULATOR</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            background-color: #add8e6; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .calculator {
+            background-color: black;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .calculator form input {
+            border: 0;
+            outline: 0;
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            box-shadow: -8px -8px 15px rgba(210, 208, 208, 0.368), 5px 5px 15px rgba(0, 0, 0, 0.2);
+            background: #2c3e50; 
+            font-size: 20px;
+            color: #ecf0f1; 
+            cursor: pointer;
+            margin: 10px;
+        }
+        form .display {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0;
+        }
+        form .display input {
+            text-align: right;
+            flex: 1;
+            font-size: 45px;
+            box-shadow: none;
+            border: none;
+            background-color: #1e2a38; 
+            color: #ecf0f1; 
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+        }
+        form input.operator {
+            color: #e74c3c; 
+            background-color: #34495e; 
+        }
+        form input.equals {
+            width: calc(100% - 10px);
+            grid-column: span 2;
+            color: #ffffff; 
+            background-color: #3498db; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <form name="calculator">
+                <div class="display">
+                    <input type="text" name="display" id="display" readonly>
+                </div>
+                <div class="buttons">
+                    <input type="button" value="AC" class="operator buttons">
+                    <input type="button" value="DE" class="operator buttons">
+                    <input type="button" value="." class="operator buttons">
+                    <input type="button" value="/" class="operator buttons">
+                    <input type="button" value="7" class="buttons">
+                    <input type="button" value="8" class="buttons">
+                    <input type="button" value="9" class="buttons">
+                    <input type="button" value="*" class="operator buttons">
+                    <input type="button" value="4" class="buttons">
+                    <input type="button" value="5" class="buttons">
+                    <input type="button" value="6" class="buttons">
+                    <input type="button" value="-" class="operator buttons">
+                    <input type="button" value="1" class="buttons">
+                    <input type="button" value="2" class="buttons">
+                    <input type="button" value="3" class="buttons">
+                    <input type="button" value="+" class="operator buttons">
+                    <input type="button" value="00" class="buttons">
+                    <input type="button" value="0" class="buttons">
+                    <input type="button" value="=" class="operator buttons equals">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('display');
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function deleteLast() {
+            display.value = display.value.toString().slice(0, -1);
+        }
+
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        function calculateResult() {
+            try {
+                display.value = eval(display.value) || '';
+            } catch (e) {
+                display.value = 'ERROR';
+            }
+        }
+
+        document.querySelectorAll('form input.buttons').forEach(button => {
+            button.addEventListener('click', function() {
+                const value = this.value;
+                if (value === 'AC') {
+                    clearDisplay();
+                } else if (value === 'DE') {
+                    deleteLast();
+                } else if (value === '=') {
+                    calculateResult();
+                } else {
+                    appendToDisplay(value);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
